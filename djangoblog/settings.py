@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 import os
 import sys
+import environ
+# from django-environ import environ
+
+env = environ.Env()
+ROOT_DIR = environ.Path(__file__) - 2  # (DjangoBlog-master/DjangoBlog/settings - 2 is project root
+APPS_DIR = ROOT_DIR.path('DjangoBlog')  # media, static, staticfiles的文件路径/)
+env.read_env(str(ROOT_DIR.path('.env')))
 
 
 def env_to_bool(env, default):
@@ -101,15 +108,14 @@ WSGI_APPLICATION = 'djangoblog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DJANGO_MYSQL_DATABASE') or 'djangoblog',
-        'USER': os.environ.get('DJANGO_MYSQL_USER') or 'root',
-        'PASSWORD': os.environ.get('DJANGO_MYSQL_PASSWORD') or 'djangoblog_123',
-        'HOST': os.environ.get('DJANGO_MYSQL_HOST') or '127.0.0.1',
-        'PORT': int(
-            os.environ.get('DJANGO_MYSQL_PORT') or 3306),
-        'OPTIONS': {
-            'charset': 'utf8mb4'},
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DJANGO_PGSQL_DATABASE'),
+        'USER': env('DJANGO_PGSQL_USER'),
+        'PASSWORD': env('DJANGO_PGSQL_PASSWORD'),
+        'HOST': env('DJANGO_PGSQL_HOST'),
+        'POSRT': int(env('DJANGO_PGSQL_PORT')),
+        # 'OPTIONS': {
+        #     'charset': 'utf8mb4'},
     }}
 
 # Password validation

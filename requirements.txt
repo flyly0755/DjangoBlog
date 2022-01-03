@@ -25,3 +25,5 @@ WeRoBot==1.13.1
 Whoosh==2.7.4
 user-agents==2.2.0
 psycopg2==2.9.3
+django-environ==0.4.5
+six~=1.16.0
